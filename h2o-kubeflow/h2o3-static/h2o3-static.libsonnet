@@ -108,7 +108,7 @@ local networkSpec = networkPolicy.mixin.spec;
                     volumeMounts: [
                       {
                         mountPath: "/opt",
-                        name : "h3-static-claim"
+                        name: "h3-static-claim"
                       },
                     ],
                     stdin: true,
