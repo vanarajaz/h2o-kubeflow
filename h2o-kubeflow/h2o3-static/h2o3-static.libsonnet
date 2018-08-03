@@ -35,15 +35,15 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels={ app: name },):
+      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
         local volume = {
           name: "local-data",
           namespace: namespace,
           emptyDir: {},
         };
-        base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels),
+        base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
 
-      local base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels) =
+      local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
         {
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
@@ -121,8 +121,8 @@ local networkSpec = networkPolicy.mixin.spec;
                     persistentVolumeClaim: {
                       claimName: "vanarajml-static"
                     }
-                  },
-                ],
+                  } 
+                ]
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
                 schedulerName: "default-scheduler",
