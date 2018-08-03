@@ -35,7 +35,7 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels={ app: name },):
+      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels):
         local volume = {
           name: "local-data",
           namespace: namespace,
@@ -119,7 +119,7 @@ local networkSpec = networkPolicy.mixin.spec;
                   {
                     claimName: "h3-static-claim"
                     persistentVolumeClaim: {
-                      claimName: claimName
+                      claimName: labels
                     }
                   } 
                 ]
