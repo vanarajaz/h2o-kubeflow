@@ -105,8 +105,9 @@ local networkSpec = networkPolicy.mixin.spec;
                         cpu: cpu,
                       },
                     },
-                    volumeMounts: [                      {
-                        mountPath: "/opt",
+                    volumeMounts: [                      
+                      {
+                        mountPath: "/home/kubernetes",
                         name: "vanarajml-static"
                       }
                     ],
