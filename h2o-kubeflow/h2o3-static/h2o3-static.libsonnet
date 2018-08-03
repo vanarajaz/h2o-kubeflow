@@ -105,23 +105,22 @@ local networkSpec = networkPolicy.mixin.spec;
                         cpu: cpu,
                       },
                     },
-                    volumeMounts: [
-                      {
+                    volumeMounts: [                      {
                         mountPath: "/opt",
-                        name: "h3-static-claim"
-                      },
+                        name: "vanarajml-static"
+                      }
                     ],
                     stdin: true,
                     tty: true,
                   },
-                  volumes: [
-                    {
-                      claimName: "h3-static-claim",
-                      persistentVolumeClaim: {
-                        claimName: "vanarajml-static"
-                      }
-                    } 
-                  ]
+                ],
+                volumes: [
+                  {
+                    name: "vanarajml-static",
+                    persistentVolumeClaim: {
+                      claimName: "vanarajml-static"
+                    }
+                  }
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
