@@ -105,12 +105,12 @@ local networkSpec = networkPolicy.mixin.spec;
                         cpu: cpu,
                       },
                     },
-                    volumeMounts : [
+                    volumeMounts: [
                       {
                         mountPath: "home/kubernetes",
                         name : "h3-static-claim"
-                      }
-                    ]
+                      },
+                    ],
                     stdin: true,
                     tty: true,
                   },
@@ -121,7 +121,7 @@ local networkSpec = networkPolicy.mixin.spec;
                     persistentVolumeClaim: {
                       claimName: "vanarajml-static"
                     }
-                  } 
+                  },
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
