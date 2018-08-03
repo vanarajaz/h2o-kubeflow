@@ -117,7 +117,7 @@ local networkSpec = networkPolicy.mixin.spec;
                 ],
                 volumes: [
                   {
-                    claimName: "h3-static-claim"
+                    claimName: "h3-static-claim",
                     persistentVolumeClaim: {
                       claimName: "vanarajml-static"
                     }
