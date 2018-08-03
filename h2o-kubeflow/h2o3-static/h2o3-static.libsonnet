@@ -112,7 +112,7 @@ local networkSpec = networkPolicy.mixin.spec;
                         mountPath: "home/kubernetes",
                         name : "h3-static-claim"
                       }
-                    ]
+                    ],
                     stdin: true,
                     tty: true,
                   },
@@ -124,7 +124,7 @@ local networkSpec = networkPolicy.mixin.spec;
                       claimName: labels
                     }
                   } 
-                ]
+                ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
                 schedulerName: "default-scheduler",
