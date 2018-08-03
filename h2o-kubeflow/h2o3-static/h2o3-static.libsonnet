@@ -122,7 +122,7 @@ local networkSpec = networkPolicy.mixin.spec;
                       claimName: "vanarajml-static"
                     }
                   } 
-                ]
+                ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
                 schedulerName: "default-scheduler",
