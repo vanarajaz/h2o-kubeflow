@@ -35,15 +35,15 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels):
+      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels={ app: name },):
         local volume = {
           name: "local-data",
           namespace: namespace,
           emptyDir: {},
         };
-        base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
+        base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels),
 
-      local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
+      local base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels) =
         {
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
@@ -63,9 +63,7 @@ local networkSpec = networkPolicy.mixin.spec;
             replicas: replicas,
             template: {
               metadata: {
-                labels: {
-                  app: "name"
-                },
+                labels: labels,
               },
               spec: {
                 containers: [
@@ -107,23 +105,23 @@ local networkSpec = networkPolicy.mixin.spec;
                         cpu: cpu,
                       },
                     },
-                    volumeMounts: [
+                    volumeMounts : [
                       {
                         mountPath: "home/kubernetes",
-                        name: "h3-static-claim"
-                      },
-                    ],
+                        name : "h3-static-claim"
+                      }
+                    ]
                     stdin: true,
                     tty: true,
-                  }
+                  },
                 ],
                 volumes: [
                   {
-                    claimName: "h3-static-claim",
+                    claimName: "h3-static-claim"
                     persistentVolumeClaim: {
-                      claimName: labels,
-                    },
-                  },
+                      claimName: "vanarajml-static"
+                    }
+                  } 
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
