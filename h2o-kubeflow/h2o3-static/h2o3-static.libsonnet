@@ -114,14 +114,14 @@ local networkSpec = networkPolicy.mixin.spec;
                     stdin: true,
                     tty: true,
                   },
-                ],
-                volumes: [
-                  {
-                    claimName: "h3-static-claim",
-                    persistentVolumeClaim: {
-                      claimName: "vanarajml-static"
-                    }
-                  } 
+                  volumes: [
+                    {
+                      claimName: "h3-static-claim",
+                      persistentVolumeClaim: {
+                        claimName: "vanarajml-static"
+                      }
+                    } 
+                  ],
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
