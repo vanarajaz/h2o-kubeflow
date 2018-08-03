@@ -110,8 +110,8 @@ local networkSpec = networkPolicy.mixin.spec;
                     volumeMounts : [
                       {
                         mountPath: "home/kubernetes",
-                        name : "h3-static-claim"
-                      }
+                        name : "h3-static-claim",
+                      },
                     ],
                     stdin: true,
                     tty: true,
@@ -119,11 +119,11 @@ local networkSpec = networkPolicy.mixin.spec;
                 ],
                 volumes: [
                   {
-                    claimName: "h3-static-claim"
+                    claimName: "h3-static-claim",
                     persistentVolumeClaim: {
-                      claimName: labels
-                    }
-                  } 
+                      claimName: labels,
+                    },
+                  },
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
