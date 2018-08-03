@@ -35,15 +35,15 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels):
+      modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels):
         local volume = {
           name: "local-data",
           namespace: namespace,
           emptyDir: {},
         };
-        base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels),
+        base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
 
-      local base(name, namespace, memory, cpu, replicas, modelServerImage, claimName, labels) =
+      local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
         {
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
