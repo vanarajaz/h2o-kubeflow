@@ -63,7 +63,9 @@ local networkSpec = networkPolicy.mixin.spec;
             replicas: replicas,
             template: {
               metadata: {
-                labels: labels,
+                labels: {
+                  app: "name"
+                },
               },
               spec: {
                 containers: [
