@@ -107,7 +107,7 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [
                       {
-                        mountPath: "home/kubernetes",
+                        mountPath: "/home/kubernetes",
                         name : "h3-static-claim"
                       },
                     ],
