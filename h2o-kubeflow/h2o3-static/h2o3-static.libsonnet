@@ -119,7 +119,7 @@ local networkSpec = networkPolicy.mixin.spec;
                   {
                     claimName: "h3-static-claim",
                     persistentVolumeClaim: {
-                      claimName: vanarajml-static
+                      claimName: "vanarajml-static"
                     }
                   } 
                 ],
