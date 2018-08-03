@@ -107,8 +107,8 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [
                       {
-                        mountPath: "/home/kubernetes",
-                        name : "h3-static-claim"
+                        mountPath: /opt,
+                        name : h3-static-claim
                       },
                     ],
                     stdin: true,
@@ -117,9 +117,9 @@ local networkSpec = networkPolicy.mixin.spec;
                 ],
                 volumes: [
                   {
-                    claimName: "h3-static-claim",
+                    claimName: h3-static-claim,
                     persistentVolumeClaim: {
-                      claimName: "vanarajml-static"
+                      claimName: vanarajml-static
                     }
                   } 
                 ],
