@@ -107,7 +107,7 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [                      
                       {
-                        mountPath: "/home/kubernetes",
+                        mountPath: "/root/h2oflows/notebook",
                         name: "vanarajml-static"
                       }
                     ],
