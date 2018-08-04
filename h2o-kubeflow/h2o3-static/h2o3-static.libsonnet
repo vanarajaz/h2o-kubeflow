@@ -107,7 +107,7 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [                      
                       {
-                        mountPath: "/root/h2oflows/notebook",
+                        mountPath: "/root/h2oflows",
                         name: "vanarajml-static"
                       }
                     ],
