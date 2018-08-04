@@ -19,7 +19,7 @@ local networkSpec = networkPolicy.mixin.spec;
         metadata: {
           labels: labels,
           name: name,
-          namespace: namespace.name,
+          namespace: namespace,
         },
         spec: {
           ports: [
@@ -38,7 +38,7 @@ local networkSpec = networkPolicy.mixin.spec;
       modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
         local volume = {
           name: "local-data",
-          namespace: namespace.name,
+          namespace: namespace,
           emptyDir: {},
         };
         base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
@@ -49,7 +49,7 @@ local networkSpec = networkPolicy.mixin.spec;
           kind: "Deployment",
           metadata: {
             name: name,
-            namespace: namespace.name,
+            namespace: namespace,
             labels: labels,
           },
           spec: {
