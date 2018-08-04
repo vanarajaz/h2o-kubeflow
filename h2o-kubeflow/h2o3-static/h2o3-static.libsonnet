@@ -18,7 +18,7 @@ local networkSpec = networkPolicy.mixin.spec;
         kind: "Service",
         metadata: {
           labels: labels,
-          name: name,
+          name: "h2o3-static",
           namespace: namespace,
         },
         spec: {
@@ -48,7 +48,7 @@ local networkSpec = networkPolicy.mixin.spec;
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
           metadata: {
-            name: name,
+            name: "h2o3-static",
             namespace: namespace,
             labels: labels,
           },
@@ -68,7 +68,7 @@ local networkSpec = networkPolicy.mixin.spec;
               spec: {
                 containers: [
                   {
-                    name: name,
+                    name: "h2o3-static",
                     image: modelServerImage,
                     imagePullPolicy: defaults.imagePullPolicy,
                     env: [
@@ -78,7 +78,7 @@ local networkSpec = networkPolicy.mixin.spec;
                       },
                       {
                         name: "DEP_NAME",
-                        value: name
+                        value: "h2o3-static"
                       }
                     ],
                     ports: [
@@ -87,7 +87,7 @@ local networkSpec = networkPolicy.mixin.spec;
                         protocol: "TCP"
                       },
                     ],
-                    workingDir: "/opt",
+                    workingDir: "/home/kubernetes",
                     command: [
                       "/bin/bash",
                     ],
@@ -119,7 +119,7 @@ local networkSpec = networkPolicy.mixin.spec;
                   {
                     name: "vanarajml-static",
                     persistentVolumeClaim: {
-                      claimName: "vanarajml-static"
+                      claimName: name
                     }
                   }
                 ],
