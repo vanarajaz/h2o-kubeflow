@@ -87,7 +87,7 @@ local networkSpec = networkPolicy.mixin.spec;
                         protocol: "TCP"
                       },
                     ],
-                    workingDir: "/home/kubernetes",
+                    workingDir: "/opt",
                     command: [
                       "/bin/bash",
                     ],
