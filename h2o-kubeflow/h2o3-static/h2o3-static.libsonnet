@@ -14,7 +14,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelHPA(name, namespace, replicas, labels={ app: name }): {
-        local userObj = std.split(namespace, "@@"),
+        local userObj = std.split(namespace, "--"),
         apiVersion: "autoscaling/v2beta1",
         kind: "HorizontalPodAutoscaler",
         metadata: {
@@ -43,7 +43,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelService(name, namespace, labels={ app: name }): {
-        local userObj = std.split(namespace, "@@"),
+        local userObj = std.split(namespace, "--"),
         apiVersion: "v1",
         kind: "Service",
         metadata: {
@@ -65,7 +65,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
-        local userObj = std.split(namespace, "@@");
+        local userObj = std.split(namespace, "--");
         local volume = {
           name: "local-data",
           namespace: userObj[0],
@@ -75,7 +75,7 @@ local networkSpec = networkPolicy.mixin.spec;
 
       local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
         {
-          local userObj = std.split(namespace, "@@"),
+          local userObj = std.split(namespace, "--"),
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
           metadata: {
