@@ -13,13 +13,43 @@ local networkSpec = networkPolicy.mixin.spec;
         imagePullPolicy:: "IfNotPresent",
       },
 
+      modelHPA(name, namespace, replicas, labels={ app: name }): {
+        local userObj = std.split(namespace, "-")
+        apiVersion: "autoscaling/v2beta1",
+        kind: "HorizontalPodAutoscaler",
+        metadata: {
+          labels: labels,
+          name: name,
+          namespace: userObj[0],
+        },
+        spec: {
+          scaleTargetRef: {
+            apiVersion: "extensions/v1beta1",
+            kind: "Deployment",
+            name: name,
+          },
+          minReplicas: replicas,
+          maxReplicas: 10,
+          metrics: [
+            {
+              type: "Resource",
+              resource: {
+                name: "memory",
+                targetAverageUtilization: 80
+              },
+            },
+          ],
+        },
+      },
+
       modelService(name, namespace, labels={ app: name }): {
+        local userObj = std.split(namespace, "-")
         apiVersion: "v1",
         kind: "Service",
         metadata: {
           labels: labels,
-          name: "h2o3-static",
-          namespace: namespace,
+          name: name,
+          namespace: userObj[0],
         },
         spec: {
           ports: [
@@ -31,25 +61,26 @@ local networkSpec = networkPolicy.mixin.spec;
           ],
           selector: labels,
           type: "LoadBalancer",
-          sessionAffinity: "ClientIP",
         },
       },
 
       modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
+        local userObj = std.split(namespace, "-")
         local volume = {
           name: "local-data",
-          namespace: namespace,
+          namespace: userObj[0],
           emptyDir: {},
         };
         base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
 
       local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
         {
+          local userObj = std.split(namespace, "-")
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
           metadata: {
-            name: "h2o3-static",
-            namespace: namespace,
+            name: name,
+            namespace: userObj[0],
             labels: labels,
           },
           spec: {
@@ -68,17 +99,13 @@ local networkSpec = networkPolicy.mixin.spec;
               spec: {
                 containers: [
                   {
-                    name: "h2o3-static",
+                    name: name,
                     image: modelServerImage,
                     imagePullPolicy: defaults.imagePullPolicy,
                     env: [
                       {
                         name: "MEMORY",
                         value: memory,
-                      },
-                      {
-                        name: "DEP_NAME",
-                        value: "h2o3-static"
                       }
                     ],
                     ports: [
@@ -89,11 +116,12 @@ local networkSpec = networkPolicy.mixin.spec;
                     ],
                     workingDir: "/opt",
                     command: [
-                      "/bin/bash",
-                    ],
-                    args: [
-                      "-c",
-                      "/opt/docker-startup.sh && java -Xmx$(MEMORY)g -jar h2o.jar -flatfile flatfile.txt -name h2oCluster",
+                      "java",
+                      "-Xmx$(MEMORY)g",
+                      "-jar",
+                      "h2o.jar",
+                      "-name",
+                      "h2oCluster",
                     ],
                     resources: {
                       requests: {
@@ -119,7 +147,7 @@ local networkSpec = networkPolicy.mixin.spec;
                   {
                     name: "vanarajml-static",
                     persistentVolumeClaim: {
-                      claimName: name
+                      claimName: userObj[1]
                     }
                   }
                 ],
