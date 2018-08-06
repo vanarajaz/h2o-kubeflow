@@ -65,7 +65,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
-        local userObj = std.split(namespace, "-"),
+        local userObj = std.split(namespace, "-");
         local volume = {
           name: "local-data",
           namespace: userObj[0],
