@@ -121,7 +121,9 @@ local networkSpec = networkPolicy.mixin.spec;
                       "-jar",
                       "h2o.jar",
                       "-name",
-                      "h2oCluster",
+                      name,
+                      "-flow_dir",
+                      "/home/" + userObj[1]
                     ],
                     resources: {
                       requests: {
