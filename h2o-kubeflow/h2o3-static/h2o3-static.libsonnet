@@ -137,8 +137,8 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [                      
                       {
-                        mountPath: "/home/" + userObj[1],
-                        name: userObj[1] + "-pvc"
+                        mountPath: "/home/" + userObj[0],
+                        name: userObj[0] + "-pvc"
                       }
                     ],
                     stdin: true,
@@ -147,9 +147,9 @@ local networkSpec = networkPolicy.mixin.spec;
                 ],
                 volumes: [
                   {
-                    name: userObj[1] + "-pvc",
+                    name: userObj[0] + "-pvc",
                     persistentVolumeClaim: {
-                      claimName: userObj[1]
+                      claimName: userObj[0]
                     }
                   }
                 ],
