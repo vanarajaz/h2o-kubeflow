@@ -14,12 +14,13 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelHPA(name, namespace, replicas, labels={ app: name }): {
+        local userObj = std.split(namespace, "@"),
         apiVersion: "autoscaling/v2beta1",
         kind: "HorizontalPodAutoscaler",
         metadata: {
           labels: labels,
           name: name,
-          namespace: namespace,
+          namespace: userObj[0],
         },
         spec: {
           scaleTargetRef: {
@@ -42,12 +43,13 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelService(name, namespace, labels={ app: name }): {
+        local userObj = std.split(namespace, "@"),
         apiVersion: "v1",
         kind: "Service",
         metadata: {
           labels: labels,
           name: name,
-          namespace: namespace,
+          namespace: userObj[0],
         },
         spec: {
           ports: [
@@ -63,20 +65,22 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
       modelServer(name, namespace, memory, cpu, replicas, modelServerImage, labels={ app: name },):
+        local userObj = std.split(namespace, "@");
         local volume = {
           name: "local-data",
-          namespace: namespace,
+          namespace: userObj[0],
           emptyDir: {},
         };
         base(name, namespace, memory, cpu, replicas, modelServerImage, labels),
 
       local base(name, namespace, memory, cpu, replicas, modelServerImage, labels) =
         {
+          local userObj = std.split(namespace, "@"),
           apiVersion: "extensions/v1beta1",
           kind: "Deployment",
           metadata: {
             name: name,
-            namespace: namespace,
+            namespace: userObj[0],
             labels: labels,
           },
           spec: {
@@ -117,7 +121,9 @@ local networkSpec = networkPolicy.mixin.spec;
                       "-jar",
                       "h2o.jar",
                       "-name",
-                      "h2oCluster",
+                      name,
+                      "-flow_dir",
+                      "/home/" + userObj[0]
                     ],
                     resources: {
                       requests: {
@@ -129,9 +135,23 @@ local networkSpec = networkPolicy.mixin.spec;
                         cpu: cpu,
                       },
                     },
+                    volumeMounts: [                      
+                      {
+                        mountPath: "/home/" + userObj[0],
+                        name: userObj[0] + "-pvc"
+                      }
+                    ],
                     stdin: true,
                     tty: true,
                   },
+                ],
+                volumes: [
+                  {
+                    name: userObj[0] + "-pvc",
+                    persistentVolumeClaim: {
+                      claimName: userObj[1]
+                    }
+                  }
                 ],
                 dnsPolicy: "ClusterFirst",
                 restartPolicy: "Always",
