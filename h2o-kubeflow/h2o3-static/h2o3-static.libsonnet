@@ -149,7 +149,7 @@ local networkSpec = networkPolicy.mixin.spec;
                   {
                     name: userObj[0] + "-pvc",
                     persistentVolumeClaim: {
-                      claimName: userObj[0]
+                      claimName: userObj[1]
                     }
                   }
                 ],
