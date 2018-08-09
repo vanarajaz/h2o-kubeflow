@@ -137,8 +137,8 @@ local networkSpec = networkPolicy.mixin.spec;
                     },
                     volumeMounts: [                      
                       {
-                        mountPath: "/root/h2oflows",
-                        name: "vanarajml-static"
+                        mountPath: "/home/" + userObj[1],
+                        name: userObj[1] + "-pvc"
                       }
                     ],
                     stdin: true,
@@ -147,7 +147,7 @@ local networkSpec = networkPolicy.mixin.spec;
                 ],
                 volumes: [
                   {
-                    name: "vanarajml-static",
+                    name: userObj[1] + "-pvc",
                     persistentVolumeClaim: {
                       claimName: userObj[1]
                     }
