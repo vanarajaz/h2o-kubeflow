@@ -123,7 +123,7 @@ local networkSpec = networkPolicy.mixin.spec;
                       "-name",
                       name,
                       "-flow_dir",
-                      "/home/" + userObj[1]
+                      "/home/" + userObj[0]
                     ],
                     resources: {
                       requests: {
