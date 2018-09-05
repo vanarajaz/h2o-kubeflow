@@ -35,7 +35,7 @@ local networkSpec = networkPolicy.mixin.spec;
               type: "Resource",
               resource: {
                 name: "memory",
-                targetAverageUtilization: 80
+                targetAverageUtilization: 30
               },
             },
           ],
